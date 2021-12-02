@@ -2,14 +2,15 @@
   "name": "findyouranimal",
   "version": "1.0.0",
   "description": "Assistance to homeless animals",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "lint": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js --fix .",
     "prettier:check": "prettier --check \"**/*.js\"",
     "prettier:write": "prettier --write \"**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,21 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.0"
+    "jest": "^27.4.3",
+    "prettier": "^2.5.0",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.js$",
+    "testEnvironment": "node"
   }
 }
