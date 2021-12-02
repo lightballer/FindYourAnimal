@@ -1,0 +1,43 @@
+{
+  "plugins": ["prettier", "eslint-plugin-import"],
+  "extends": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    // errors
+    "prettier/prettier": "error",
+    "no-debugger": "error",
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "func-names": "off",
+    "import/prefer-default-export": "off",
+    "no-continue": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-restricted-syntax": "off",
+    "no-underscore-dangle": "off",
+    // causes issues - drops types / etc
+    "prefer-destructuring": "off",
+    // off until fixed - https://github.com/typescript-eslint/typescript-eslint/issues/1824
+    "prefer-arrow-callback": "off",
+    "import/no-default-export": "error"
+  },
+  "overrides": [
+    {
+      // special exceptions for js files
+      "files": ["**/*.js"],
+      "rules": {
+        "no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ]
+      }
+    }
+  ]
+}
