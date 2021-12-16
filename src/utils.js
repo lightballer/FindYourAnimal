@@ -18,7 +18,7 @@ const createToken = () => {
 };
 
 const checkPassword = (reqPassword, foundUser) => {
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve) =>
     bcrypt.compare(reqPassword, foundUser.password, (err) => {
       resolve(err ? false : true);
     })
