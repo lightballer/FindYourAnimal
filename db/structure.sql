@@ -3,7 +3,8 @@ CREATE TABLE Users (
   Name          varchar(64) NOT NULL,
   Password      varchar(255) NOT NULL,
   Token         text,
-  Email         text UNIQUE NOT NULL
+  Email         text UNIQUE NOT NULL,
+  Type          varchar(10) NOT NULL
 );
 
 ALTER TABLE Users ADD CONSTRAINT pkUsers PRIMARY KEY (Id);
@@ -27,9 +28,6 @@ ALTER TABLE PetOwners ADD CONSTRAINT fkPetOwnersUserId FOREIGN KEY (UserId) REFE
 
 CREATE TABLE PetFinders (
   Id            serial,
-  Name          varchar(64) NOT NULL,
-  Password      varchar(255) NOT NULL,
-  Email         text UNIQUE NOT NULL,
   Phone         varchar(12),
   Description   text,
   Location      varchar(256),

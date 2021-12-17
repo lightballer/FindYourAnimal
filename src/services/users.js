@@ -29,7 +29,30 @@ const signin = async (req, res) => {
   res.status(200).json(foundUser);
 };
 
+const logout = async (req, res) => {
+  let { token } = context;
+  const foundUser = await User.findByToken(token);
+  token = '';
+  await User.updateUserToken(foundUser.id, token);
+  foundUser.token = token;
+  res.status(200).json({ msg : 'You have been Logged Out' });
+};
+
+const assign = async (req, res) => {
+  const { userInfo } = req.body;
+  const { token } = context;
+  const foundUser = await User.findByToken(token);
+  if (foundUser.type === 'owner') {
+    await User.assignPetOwners(foundUser.id, userInfo);
+  } else {
+    await User.assignPetFinders(foundUser.id, userInfo);
+  }
+  res.status(200).json(foundUser);
+}
+
 module.exports = {
   signup,
   signin,
+  logout,
+  assign
 };
