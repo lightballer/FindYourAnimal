@@ -1,58 +1,47 @@
 const { hashPassword, createToken, checkPassword } = require('../utils');
-const User = require('../models/users');
+const User = require('../repository/users');
 
-const signup = async (req, res) => {
-  try {
-    const { user } = req.body;
-    const [password, token] = await Promise.all([hashPassword(user.password), createToken()]);
-    user.password = password;
-    user.token = token;
-    const newUser = await User.create(user);
-    console.log({ newUser });
-    res.status(201).json({ user: newUser });
-  } catch (err) {
-    console.error(err);
-    res.json(500);
-  }
+const signup = async (user) => {
+  const [password, token] = await Promise.all([hashPassword(user.password), createToken()]);
+  user.password = password;
+  user.token = token;
+  return User.create(user);
 };
 
-const signin = async (req, res) => {
-  const { user } = req.body;
-  const foundUser = await User.findByEmail(user);
-  if (!foundUser) return res.status(404);
-  const match = checkPassword(user.password, foundUser);
-  if (!match) return res.status(403);
+const signin = async (user) => {
+  const foundUser = await User.findByEmail(user.email);
+  if (!foundUser) return { err: { status: 404 } };
+  const match = await checkPassword(user.password, foundUser.password);
+  if (!match) return { err: { status: 403 } };
   const token = await createToken();
   await User.updateUserToken(foundUser.id, token);
   delete foundUser.password;
   foundUser.token = token;
-  res.status(200).json(foundUser);
+  return { user: foundUser };
 };
 
-const logout = async (req, res) => {
-  let { token } = context;
+const logout = async (token) => {
   const foundUser = await User.findByToken(token);
-  token = '';
-  await User.updateUserToken(foundUser.id, token);
+  if (!foundUser) return { err: { status: 404 } };
+  await User.updateUserToken(foundUser.id, null);
   foundUser.token = token;
-  res.status(200).json({ msg : 'You have been Logged Out' });
+  return { user: foundUser };
 };
 
-const assign = async (req, res) => {
-  const { userInfo } = req.body;
-  const { token } = context;
+const assign = async (info, token) => {
   const foundUser = await User.findByToken(token);
+  if (!foundUser) return { err: { status: 404 } };
   if (foundUser.type === 'owner') {
-    await User.assignPetOwners(foundUser.id, userInfo);
+    await User.assignPetOwners(foundUser.id, info);
   } else {
-    await User.assignPetFinders(foundUser.id, userInfo);
+    await User.assignPetFinders(foundUser.id, info);
   }
-  res.status(200).json(foundUser);
-}
+  return foundUser;
+};
 
 module.exports = {
   signup,
   signin,
   logout,
-  assign
+  assign,
 };

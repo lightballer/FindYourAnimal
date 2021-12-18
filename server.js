@@ -6,7 +6,7 @@ const app = express();
 
 const SHUTDOWN_TIMEOUT = 30 * 1000;
 
-const users = require('./src/controllers/users');
+const users = require('./src/routes/users');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -18,10 +18,7 @@ app.get('/', (req, res) => {
 });
 
 const cleanup = () => {
-  app.close(() => {
-    db.close();
-    process.exit();
-  });
+  db.close().then(() => process.exit());
 
   setTimeout(function () {
     console.error('Could not close connections in time, forcing shut down');

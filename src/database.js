@@ -11,7 +11,7 @@ class Database {
   }
 
   close() {
-    this.pool.end();
+    return this.pool.end();
   }
 }
 

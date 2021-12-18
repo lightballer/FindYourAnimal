@@ -10,10 +10,8 @@ const create = (user) =>
       return data.rows[0];
     });
 
-const findByEmail = (user) =>
-  database
-    .query('SELECT * FROM users WHERE email = $1;', [user.email])
-    .then((data) => data.rows[0]);
+const findByEmail = (email) =>
+  database.query('SELECT * FROM users WHERE email = $1;', [email]).then((data) => data.rows[0]);
 
 const updateUserToken = (id, token) =>
   database
@@ -23,7 +21,7 @@ const updateUserToken = (id, token) =>
 const findByToken = (token) =>
   database.query('SELECT * FROM users WHERE token = $1;', [token]).then((data) => data.rows[0]);
 
-  const assignPetOwners = (id, userInfo) =>
+const assignPetOwners = (id, userInfo) =>
   database
     .query(
       'INSERT INTO petOwners (phone, description, location, whome, age, userId) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;',
@@ -49,5 +47,5 @@ module.exports = {
   updateUserToken,
   findByToken,
   assignPetOwners,
-  assignPetFinders
+  assignPetFinders,
 };
