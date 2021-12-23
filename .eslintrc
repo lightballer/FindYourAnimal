@@ -2,7 +2,7 @@
   "plugins": ["prettier", "eslint-plugin-import"],
   "extends": ["prettier"],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2018
   },
   "rules": {
     // errors

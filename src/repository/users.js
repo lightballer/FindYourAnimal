@@ -21,6 +21,26 @@ const updateUserToken = (id, token) =>
 const findByToken = (token) =>
   database.query('SELECT * FROM users WHERE token = $1;', [token]).then((data) => data.rows[0]);
 
+const findById = (id) =>
+  database
+    .query('SELECT name, email, type FROM users WHERE id = $1;', [id])
+    .then((data) => data.rows[0]);
+
+const findPetOwnerByUserId = (id) =>
+  database
+    .query('SELECTid, phone, description, location, whome, age FROM petowners WHERE userid = $1;', [
+      id,
+    ])
+    .then((data) => data.rows[0]);
+
+const findPetFinderByUserId = (id) =>
+  database
+    .query(
+      'SELECTid, phone, description, location, whome, age FROM petfinders WHERE userid = $1;',
+      [id]
+    )
+    .then((data) => data.rows[0]);
+
 const assignPetOwners = (id, userInfo) =>
   database
     .query(
@@ -41,6 +61,30 @@ const assignPetFinders = (id, userInfo) =>
       return data.rows[0];
     });
 
+const findPetFinders = (skip, take) =>
+  database
+    .query(
+      'SELECT id, phone, description, location, whome, age FROM petfinders LIMIT $1 OFFSET $2',
+      [take, skip]
+    )
+    .then((data) => data.rows);
+
+const findPetOwners = (skip, take) =>
+  database
+    .query(
+      'SELECT id, phone, description, location, whome, age FROM petowners LIMIT $1 OFFSET $2',
+      [take, skip]
+    )
+    .then((data) => data.rows);
+
+const findUserDialogs = (email, skip, take) =>
+  database
+    .query(
+      'SELECT id, user1, user2 FROM dialogs WHERE user1 = $1 OR user2 = $1 LIMIT $2 OFFSET $3',
+      [email, take, skip]
+    )
+    .then((data) => data.rows);
+
 module.exports = {
   create,
   findByEmail,
@@ -48,4 +92,10 @@ module.exports = {
   findByToken,
   assignPetOwners,
   assignPetFinders,
+  findPetFinders,
+  findPetOwners,
+  findById,
+  findPetFinderByUserId,
+  findPetOwnerByUserId,
+  findUserDialogs,
 };

@@ -33,9 +33,35 @@ const assign = async (req, res) => {
   else res.status(200).json(user);
 };
 
+const getUsers = async (req, res) => {
+  const { skip, take } = req.query;
+  const { authorization: token } = req.headers;
+  const { users, err } = await userService.getUsers(token, skip, take);
+  if (err) res.status(err.status).send();
+  else res.status(200).json(users);
+};
+
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  const { user, err } = await userService.getUser(id);
+  if (err) res.status(err.status).send();
+  else res.status(200).json(user);
+};
+
+const getUserDialogs = async (req, res) => {
+  const { skip, take } = req.query;
+  const { authorization: token } = req.headers;
+  const { dialogs, err } = await userService.getUserDialogs(token, skip, take);
+  if (err) res.status(err.status).send();
+  else res.status(200).json(dialogs);
+};
+
 module.exports = {
   signup,
   signin,
   logout,
   assign,
+  getUsers,
+  getUser,
+  getUserDialogs,
 };
