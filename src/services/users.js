@@ -41,7 +41,6 @@ const assign = async (info, token) => {
 
 const getUsers = async (token, skip = 0, take = USERS_PER_PAGE) => {
   const foundUser = await User.findByToken(token);
-  const users = [];
   if (foundUser.type === 'owner') {
     return User.findPetFinders(skip, take);
   } else {
