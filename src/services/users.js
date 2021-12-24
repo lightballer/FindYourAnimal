@@ -82,6 +82,11 @@ const createDialog = async (userId, companionId) => {
   return dialog;
 };
 
+const createMessage = async (userId, dialogId, content) => {
+  const message = await User.createMessage(userId, dialogId, content);
+  return message;
+};
+
 module.exports = {
   signup,
   signin,
@@ -92,4 +97,5 @@ module.exports = {
   getUserDialogs,
   getDialog,
   createDialog,
+  createMessage,
 };

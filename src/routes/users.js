@@ -9,6 +9,7 @@ const {
   getUserDialogs,
   getDialog,
   createDialog,
+  createMessage,
 } = require('../controllers/users');
 const { authorized } = require('../middlewares/authorized');
 
@@ -22,5 +23,6 @@ router.get('/:id', getUser);
 router.get('/:id/dialogs', getUserDialogs);
 router.post('/:id/dialogs', createDialog);
 router.get('/:id/dialogs/:dialogId', getDialog);
+router.post('/:id/dialogs/:dialogId', createMessage);
 
 module.exports = router;
