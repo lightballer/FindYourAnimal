@@ -77,6 +77,11 @@ const getDialog = async (dialogId) => {
   return dialog;
 };
 
+const createDialog = async (userId, companionId) => {
+  const dialog = await User.createDialog(userId, companionId);
+  return dialog;
+};
+
 module.exports = {
   signup,
   signin,
@@ -86,4 +91,5 @@ module.exports = {
   getUser,
   getUserDialogs,
   getDialog,
+  createDialog,
 };

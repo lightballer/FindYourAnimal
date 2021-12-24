@@ -63,6 +63,14 @@ const getDialog = async (req, res) => {
   else res.status(200).json(dialog);
 };
 
+const createDialog = async (req, res) => {
+  const { userId } = req.params;
+  const { companionId } = req.query;
+  const { dialog, err } = await userService.createDialog(userId, companionId);
+  if (err) res.status(err.status).send();
+  else res.status(200).json(dialog);
+};
+
 module.exports = {
   signup,
   signin,
@@ -72,4 +80,5 @@ module.exports = {
   getUser,
   getUserDialogs,
   getDialog,
+  createDialog,
 };

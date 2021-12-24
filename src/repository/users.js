@@ -91,6 +91,16 @@ const findDialog = (dialogId) =>
     .query('SELECT * FROM messages WHERE dialogId = $1 ORDER BY createdAt', [dialogId])
     .then((data) => data.rows);
 
+const createDialog = (userId, companionId) =>
+  database
+    .query('INSERT INTO dialogs (user1, user2) VALUES ($1, $2) RETURNING id;', [
+      userId,
+      companionId,
+    ])
+    .then((data) => {
+      return data.rows[0];
+    });
+
 module.exports = {
   create,
   findByEmail,
@@ -105,4 +115,5 @@ module.exports = {
   findPetOwnerByUserId,
   findUserDialogs,
   findDialog,
+  createDialog,
 };
