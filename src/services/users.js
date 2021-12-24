@@ -72,6 +72,11 @@ const getUserDialogs = async (token, skip = 0, take = USERS_PER_PAGE) => {
   }));
 };
 
+const getDialog = async (dialogId) => {
+  const dialog = await User.findDialog(dialogId);
+  return dialog;
+};
+
 module.exports = {
   signup,
   signin,
@@ -80,4 +85,5 @@ module.exports = {
   getUsers,
   getUser,
   getUserDialogs,
+  getDialog,
 };

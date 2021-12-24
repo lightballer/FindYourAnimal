@@ -52,12 +52,13 @@ ALTER TABLE Dialogs ADD CONSTRAINT pkDialogs PRIMARY KEY (Id);
 
 CREATE TABLE Messages (
   Id        serial,
-  UserEmail text NOT NULL,
+  User      text NOT NULL,
   DialogId  integer NOT NULL,
-  Content   text NOT NULL
+  Content   text NOT NULL,
+  CreatedAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 );
 
-ALTER TABLE Messages ADD CONSTRAINT fkMessageUsers1 FOREIGN KEY (UserEmail) REFERENCES Users (Email) ON DELETE CASCADE;
+ALTER TABLE Messages ADD CONSTRAINT fkMessageUsers1 FOREIGN KEY (User) REFERENCES Users (Email) ON DELETE CASCADE;
 ALTER TABLE Messages ADD CONSTRAINT fkMessageDialogsId FOREIGN KEY (DialogId) REFERENCES Dialogs (Id) ON DELETE CASCADE;
 
 CREATE TABLE Pets (

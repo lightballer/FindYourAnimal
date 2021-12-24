@@ -28,15 +28,16 @@ const findById = (id) =>
 
 const findPetOwnerByUserId = (id) =>
   database
-    .query('SELECTid, phone, description, location, whome, age FROM petowners WHERE userid = $1;', [
-      id,
-    ])
+    .query(
+      'SELECT id, phone, description, location, whome, age FROM petowners WHERE userId = $1;',
+      [id]
+    )
     .then((data) => data.rows[0]);
 
 const findPetFinderByUserId = (id) =>
   database
     .query(
-      'SELECTid, phone, description, location, whome, age FROM petfinders WHERE userid = $1;',
+      'SELECT id, phone, description, location, whome, age FROM petfinders WHERE userId = $1;',
       [id]
     )
     .then((data) => data.rows[0]);
@@ -85,6 +86,11 @@ const findUserDialogs = (email, skip, take) =>
     )
     .then((data) => data.rows);
 
+const findDialog = (dialogId) =>
+  database
+    .query('SELECT * FROM messages WHERE dialogId = $1 ORDER BY createdAt', [dialogId])
+    .then((data) => data.rows);
+
 module.exports = {
   create,
   findByEmail,
@@ -98,4 +104,5 @@ module.exports = {
   findPetFinderByUserId,
   findPetOwnerByUserId,
   findUserDialogs,
+  findDialog,
 };
