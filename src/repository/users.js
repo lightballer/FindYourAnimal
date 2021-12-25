@@ -46,7 +46,7 @@ const assignPetOwners = (id, userInfo) =>
   database
     .query(
       'INSERT INTO petOwners (phone, description, location, whome, age, userId) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;',
-      [userInfo.phone, userInfo.descriprtion, userInfo.location, userInfo.whome, userInfo.age, id]
+      [userInfo.phone, userInfo.description, userInfo.location, userInfo.whome, userInfo.age, id]
     )
     .then((data) => {
       return data.rows[0];
@@ -78,39 +78,6 @@ const findPetOwners = (skip, take) =>
     )
     .then((data) => data.rows);
 
-const findUserDialogs = (email, skip, take) =>
-  database
-    .query(
-      'SELECT id, user1, user2 FROM dialogs WHERE user1 = $1 OR user2 = $1 LIMIT $2 OFFSET $3',
-      [email, take, skip]
-    )
-    .then((data) => data.rows);
-
-const findDialog = (dialogId) =>
-  database
-    .query('SELECT * FROM messages WHERE dialogId = $1 ORDER BY createdAt', [dialogId])
-    .then((data) => data.rows);
-
-const createDialog = (userId, companionId) =>
-  database
-    .query('INSERT INTO dialogs (user1, user2) VALUES ($1, $2) RETURNING id;', [
-      userId,
-      companionId,
-    ])
-    .then((data) => {
-      return data.rows[0];
-    });
-
-const createMessage = (userId, dialogId, content) =>
-  database
-    .query(
-      'INSERT INTO dialogs (user, dialogId, content) VALUES ($1, $2, $3) RETURNING id, content;',
-      [userId, dialogId, content]
-    )
-    .then((data) => {
-      return data.rows[0];
-    });
-
 module.exports = {
   create,
   findByEmail,
@@ -123,8 +90,4 @@ module.exports = {
   findById,
   findPetFinderByUserId,
   findPetOwnerByUserId,
-  findUserDialogs,
-  findDialog,
-  createDialog,
-  createMessage,
 };
