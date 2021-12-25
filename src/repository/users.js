@@ -104,7 +104,7 @@ const createDialog = (userId, companionId) =>
 const createMessage = (userId, dialogId, content) =>
   database
     .query(
-      'INSERT INTO dialogs (user, dialogId, content) VALUES ($1, $2, $3) RETURNING id, content;',
+      'INSERT INTO dialogs (user1, dialogId, content) VALUES ($1, $2, $3) RETURNING id, content;',
       [userId, dialogId, content]
     )
     .then((data) => {
