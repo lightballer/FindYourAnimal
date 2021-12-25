@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/structure.sql/:/docker-entrypoint-initdb.d/structure.sql
+    environment:
+      POSTGRES_USER: testuserrole
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: findanimal
+    tty: true
