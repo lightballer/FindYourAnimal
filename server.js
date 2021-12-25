@@ -6,16 +6,13 @@ const app = express();
 
 const SHUTDOWN_TIMEOUT = 30 * 1000;
 
-const users = require('./src/routes/users');
+const routers = require('./src/routes/');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/users', users);
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const routes = Object.keys(routers);
+routes.map((route) => app.use(route, routers[route]));
 
 const cleanup = () => {
   db.close().then(() => process.exit());
