@@ -46,7 +46,7 @@ const assignPetOwners = (id, userInfo) =>
   database
     .query(
       'INSERT INTO petOwners (phone, description, location, whome, age, userId) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;',
-      [userInfo.phone, userInfo.descriprtion, userInfo.location, userInfo.whome, userInfo.age, id]
+      [userInfo.phone, userInfo.description, userInfo.location, userInfo.whome, userInfo.age, id]
     )
     .then((data) => {
       return data.rows[0];
