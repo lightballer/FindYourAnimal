@@ -14,7 +14,7 @@ CREATE UNIQUE INDEX akUsersEmail ON Users (Email);
 CREATE TABLE PetOwners (
   Id            serial,
   Phone         varchar(12),
-  Description   text,
+  Description   varchar(256),
   Location      varchar(256),
   Whome         varchar(256),
   Age           integer,
@@ -29,7 +29,7 @@ ALTER TABLE PetOwners ADD CONSTRAINT fkPetOwnersUserId FOREIGN KEY (UserId) REFE
 CREATE TABLE PetFinders (
   Id            serial,
   Phone         varchar(12),
-  Description   text,
+  Description   varchar(256),
   Location      varchar(256),
   Whome         varchar(256),
   Age           integer,
