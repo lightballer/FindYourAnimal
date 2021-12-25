@@ -48,37 +48,6 @@ const getUser = async (req, res) => {
   else res.status(200).json(user);
 };
 
-const getUserDialogs = async (req, res) => {
-  const { skip, take } = req.query;
-  const { authorization: token } = req.headers;
-  const { dialogs, err } = await userService.getUserDialogs(token, skip, take);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(dialogs);
-};
-
-const getDialog = async (req, res) => {
-  const { dialogId } = req.params;
-  const { dialog, err } = await userService.getDialog(dialogId);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(dialog);
-};
-
-const createDialog = async (req, res) => {
-  const { userId } = req.params;
-  const { companionId } = req.query;
-  const { dialog, err } = await userService.createDialog(userId, companionId);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(dialog);
-};
-
-const createMessage = async (req, res) => {
-  const { userId, dialogId } = req.params;
-  const { content } = req.body;
-  const { message, err } = await userService.createMessage(userId, dialogId, content);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(message);
-};
-
 module.exports = {
   signup,
   signin,
@@ -86,8 +55,4 @@ module.exports = {
   assign,
   getUsers,
   getUser,
-  getUserDialogs,
-  getDialog,
-  createDialog,
-  createMessage,
 };
