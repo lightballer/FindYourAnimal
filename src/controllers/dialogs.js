@@ -1,23 +1,21 @@
-const userService = require('../services/dialogs');
+const dialogsService = require('../services/dialogs');
 
 const getUserDialogs = async (req, res) => {
   const { skip, take } = req.query;
   const { authorization: token } = req.headers;
-  const { dialogs, err } = await userService.getUserDialogs(token, skip, take);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(dialogs);
+  const dialogs = await dialogsService.getUserDialogs(token, skip, take);
+  res.status(200).json(dialogs);
 };
 
 const getDialog = async (req, res) => {
   const { dialogId } = req.params;
-  const { dialog, err } = await userService.getDialog(dialogId);
-  if (err) res.status(err.status).send();
-  else res.status(200).json(dialog);
+  const dialog = await dialogsService.getDialog(dialogId);
+  res.status(200).json(dialog);
 };
 
 const createDialog = async (req, res) => {
   const { userId, companionId } = req.body;
-  const { dialog, err } = await userService.createDialog(userId, companionId);
+  const { dialog, err } = await dialogsService.createDialog(userId, companionId);
   if (err) res.status(err.status).send();
   else res.status(200).json(dialog);
 };

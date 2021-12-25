@@ -42,8 +42,8 @@ ALTER TABLE PetFinders ADD CONSTRAINT fkPetFindersUserId FOREIGN KEY (UserId) RE
 
 CREATE TABLE Dialogs (
   Id        serial,
-  User1     text NOT NULL,
-  User2     text NOT NULL
+  User1     varchar(256) NOT NULL,
+  User2     varchar(256) NOT NULL
 );
 
 ALTER TABLE Dialogs ADD CONSTRAINT fkDialogsUser1 FOREIGN KEY (User1) REFERENCES Users (Email) ON DELETE CASCADE;

@@ -43,8 +43,6 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
   const { id } = req.params;
   const user = await userService.getUser(id);
-  // if (err) res.status(err.status).send();
-  // else
   res.status(200).json(user);
 };
 
